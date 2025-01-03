@@ -1,0 +1,13 @@
+.image-card {
+    width: 90%;
+    max-width: 400px;
+    margin: 16px auto; // Centers the card horizontally
+    position: relative;
+    
+    img {
+      width: 100%;
+      height: 30%;
+      border-radius: 8px 8px 0 0;
+    }
+  }
+  

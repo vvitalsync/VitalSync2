@@ -1,0 +1,59 @@
+.inicio-content {
+  --ion-background-color: #4096dc; /* Fondo claro */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Alineación superior */
+  padding: 0;
+}
+
+.content-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px; /* Espaciado entre elementos */
+  padding: 16px;
+  height: 100%; /* Asegura que ocupe todo el espacio disponible */
+}
+
+.image-container {
+  flex: 2; /* Ocupa más espacio en la pantalla */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--ion-color-light); /* Fondo suave */
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(161, 177, 255, 0.1);
+  padding: 12px;
+}
+
+.datos-container {
+  flex: 3; /* Ocupa más espacio para los datos */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  background-color: #ffffff; /* Fondo blanco */
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+}
+.configuracion-container {
+  display: flex; // Usar flexbox
+  justify-content: center; // Centrar horizontalmente
+  align-items: center; // Centrar verticalmente
+  width: 100%;
+  max-width: 600px; // Limitar el ancho máximo
+}
+app-image-component {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* Asegura que la imagen se ajuste */
+}
+
+app-datos-component {
+  width: 100%;
+  text-align: left;
+  padding: 16px;
+}
+body{
+  padding: 70px;
+}
