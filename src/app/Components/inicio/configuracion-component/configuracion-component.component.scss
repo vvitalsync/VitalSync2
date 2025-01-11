@@ -1,0 +1,32 @@
+ion-card {
+  border-radius: 16px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff; /* Fondo blanco limpio */
+}
+
+.edit-container {
+  margin-top: 16px;
+  padding: 16px;
+  background-color: #f9fafc; /* Fondo más claro */
+  border: 1px solid #e5e7eb; /* Borde suave */
+  border-radius: 12px;
+}
+/* Responsive Design */
+@media (max-width: 768px) {
+  .content-wrapper {
+    gap: 16px;
+  }
+
+  .datos-card,
+  .image-card {
+    margin: 8px 0;
+  }
+
+  ion-card-title {
+    font-size: 1rem;
+  }
+
+  .datos-texto {
+    font-size: 0.85rem;
+  }
+}

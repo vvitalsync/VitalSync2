@@ -1,0 +1,90 @@
+:root {
+  /* Paleta de colores */
+  --primary-color: #007bff; /* Azul primario */
+  --primary-hover: #0056b3; /* Azul más oscuro para hover */
+  --dark-background: #1e1e1e; /* Fondo oscuro */
+  --dark-secondary: #2a2a2a; /* Fondo oscuro secundario */
+  --dark-hover: #3a3a3a; /* Fondo oscuro para hover */
+  --light-background: #f4f4f9; /* Fondo claro */
+  --light-text: #eaeaea; /* Texto claro */
+  --dark-text: #333; /* Texto oscuro */
+  --white: #ffffff; /* Blanco */
+  --shadow-color: rgba(0, 0, 0, 0.15); /* Sombra suave */
+  --shadow-light: rgba(0, 0, 0, 0.1); /* Sombra más ligera */
+}
+
+/* Estilo personalizado para el menú lateral */
+ion-menu {
+  --background: linear-gradient(180deg, var(--dark-background), var(--dark-secondary));
+  --color: var(--white);
+  box-shadow: 2px 0 5px var(--shadow-color);
+}
+
+/* Estilo de los items del menú */
+ion-item {
+  --background: transparent;
+  --color: var(--white);
+  padding: 12px 16px;
+  border-left: 3px solid transparent;
+  transition: background-color 0.2s linear, color 0.2s linear, border-color 0.2s linear;
+}
+
+ion-item:hover {
+  --background: var(--dark-hover);
+  --color: var(--light-text);
+  border-left: 3px solid var(--primary-color);
+}
+
+/* Estilo para los íconos en el menú */
+ion-icon {
+  font-size: 20px;
+  color: var(--white);
+  margin-right: 12px;
+  transition: color 0.2s linear;
+}
+
+ion-item:hover ion-icon {
+  color: var(--primary-color);
+}
+
+/* Estilo del contenido principal */
+#main-content {
+  padding: 16px;
+  background-color: var(--light-background);
+  color: var(--dark-text);
+  min-height: 100vh;
+}
+
+/* Estilo para la barra de navegación */
+ion-toolbar {
+  --background: var(--primary-color);
+  --color: var(--white);
+  --border-color: var(--primary-hover);
+  box-shadow: 0px 2px 5px var(--shadow-light);
+}
+
+/* Personalización para la barra de estado en dispositivos móviles */
+:root {
+  --ion-safe-area-top: 20px;
+  --ion-safe-area-bottom: 20px;
+}
+
+/* Sombra sutil en el menú */
+ion-menu-shadow {
+  box-shadow: 2px 0 5px var(--shadow-light);
+}
+
+/* Ajustes para pantallas pequeñas */
+@media (max-width: 600px) {
+  ion-toolbar {
+    font-size: 14px;
+  }
+
+  ion-item {
+    font-size: 14px;
+  }
+
+  ion-icon {
+    font-size: 18px;
+  }
+}

@@ -1,3 +1,25 @@
-<p>
-  conf-component works!
-</p>
+<ion-card>
+  <ion-card-header>
+    <ion-card-title>🛠 Editar Información</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    <form (ngSubmit)="guardarCambios()">
+      <!-- Input para cambiar la imagen -->
+      <ion-item>
+        <ion-label position="stacked">Nueva Imagen</ion-label>
+        <input type="file" (change)="onFileSelected($event)" accept="image/*" />
+      </ion-item>
+
+      <!-- Input para cambiar los datos -->
+      <ion-item>
+        <ion-label position="stacked">Editar Texto</ion-label>
+        <ion-textarea [(ngModel)]="datosTexto" name="datosTexto"></ion-textarea>
+      </ion-item>
+
+      <!-- Botón para guardar cambios -->
+      <ion-button expand="block" type="submit" color="success">
+        Guardar Cambios
+      </ion-button>
+    </form>
+  </ion-card-content>
+</ion-card>

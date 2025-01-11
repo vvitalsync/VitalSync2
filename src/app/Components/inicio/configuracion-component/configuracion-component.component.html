@@ -1,3 +1,11 @@
-<p>
-  configuracion-component works!
-</p>
+<ion-card>
+  <ion-card-content>
+    <ion-button expand="full" color="primary" (click)="toggleEdit()">
+      Editar Datos
+    </ion-button>
+    <div *ngIf="isEditing" class="edit-container">
+      <app-conf-component></app-conf-component>
+    </div>
+  </ion-card-content>
+</ion-card>
+
