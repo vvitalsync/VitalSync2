@@ -1,27 +1,82 @@
-ion-item {
-    margin-bottom: 15px;
-  }
-  
-  ion-button {
-    margin-top: 15px;
-  }
-  /* Responsive Design */
-@media (max-width: 768px) {
-  .content-wrapper {
-    gap: 16px;
+.edit-card {
+  padding: 16px;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  max-width: 90%; /* Adaptable para pantallas móviles */
+  margin: 0 auto;
+
+  ion-card-header {
+    padding-bottom: 10px;
+    text-align: center;
+
+    ion-card-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #2c3e50;
+    }
   }
 
-  .datos-card,
-  .image-card {
-    margin: 8px 0;
-  }
+  ion-card-content {
+    padding: 0;
 
-  ion-card-title {
-    font-size: 1rem;
-  }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 12px; /* Espacio entre inputs */
 
-  .datos-texto {
-    font-size: 0.85rem;
+      ion-item {
+        --inner-padding-top: 8px;
+        --inner-padding-bottom: 8px;
+        --border-radius: 8px;
+        --background: #f8f8f8;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+        margin-bottom: 8px;
+
+        ion-label {
+          font-size: 0.9rem;
+          font-weight: 500;
+          color: #34495e;
+        }
+
+        ion-input,
+        ion-textarea {
+          font-size: 0.9rem;
+          color: #555;
+        }
+      }
+
+      /* Estilo del input de archivo */
+      input[type="file"] {
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background: #f8f8f8;
+        font-size: 0.9rem;
+        color: #555;
+        outline: none;
+        transition: border-color 0.2s;
+
+        &:focus {
+          border-color: #1abc9c;
+        }
+      }
+
+      /* Estilo del botón */
+      ion-button {
+        --border-radius: 8px;
+        --background: #1abc9c;
+        --color: white;
+        font-size: 1rem;
+        font-weight: 600;
+        text-transform: capitalize;
+        transition: transform 0.2s ease, background-color 0.2s ease;
+
+        &:hover {
+          transform: translateY(-2px);
+          background-color: #1660F5;
+        }
+      }
+    }
   }
 }
-  

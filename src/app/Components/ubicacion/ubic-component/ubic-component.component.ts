@@ -1,70 +1,118 @@
-import { Component, OnInit, inject, AfterViewInit } from '@angular/core';
-import { Database, ref, objectVal } from '@angular/fire/database';
 import { GoogleMapsModule } from '@angular/google-maps';
-
+import { Component, OnInit, inject } from '@angular/core';
+import { Database, ref, onValue } from '@angular/fire/database';
+import { Firestore, doc, getDoc } from '@angular/fire/firestore';
+import { UserService } from '../../../Services/user-service.service';
 /// <reference types="google.maps" />
+
 @Component({
   standalone: true,
   selector: 'app-ubic-component',
   templateUrl: './ubic-component.component.html',
   styleUrls: ['./ubic-component.component.scss'],
 })
-export class UbicComponentComponent implements OnInit, AfterViewInit {
+export class UbicComponentComponent implements OnInit {
   private database = inject(Database);
-  latt: number | undefined = undefined;
-  lngg: number | undefined = undefined;
+  private firestore = inject(Firestore);
 
-  constructor() {}
+  latt: number | null = null;
+  lngg: number | null = null;
+  user: string | null = '';
+  dis:  string | null='';
+
+  constructor(private userService: UserService) {}
 
   ngOnInit(): void {
-    this.obtenerDatosFirebase();
-  }
+    this.userService.user$.subscribe((user) => {
+      this.user = user; // Asignar el usuario
+      console.log('Usuario recibido:', this.user);
 
-  obtenerDatosFirebase() {
-    const lattRef = ref(this.database, '/Ubi/lat');
-    const lnggRef = ref(this.database, '/Ubi/lng');
-
-    objectVal<number>(lattRef).subscribe((latt) => {
-      this.latt = latt;
-      this.initMap(); // Inicializa el mapa aquí después de obtener la latitud
-    });
-
-    objectVal<number>(lnggRef).subscribe((lngg) => {
-      this.lngg = lngg;
-      this.initMap(); // Inicializa el mapa aquí después de obtener la longitud
+      if (this.user) {
+        // Llamar a la función para obtener el campo "dis"
+        this.obtenerCampoDis().then(() => {
+          // Llamar a la función para obtener los datos una vez que tengamos "dis"
+          this.obtenerDatosRealtimeDatabase();
+        });
+      }
     });
   }
 
-  ngAfterViewInit(): void {
-    // Este método se puede dejar vacío si no necesitas hacer nada aquí
-    // La inicialización del mapa se maneja en obtenerDatosFirebase
+  async obtenerCampoDis(): Promise<void> {
+    if (!this.user) {
+      console.warn('Usuario no definido.');
+      return;
+    }
+
+    try {
+      // Referencia al documento de Firestore
+      const userDocRef = doc(this.firestore, `usuario/${this.user}`);
+      const userDocSnap = await getDoc(userDocRef);
+
+      if (userDocSnap.exists()) {
+        // Obtener el valor del campo "dis"
+        this.dis = userDocSnap.data()['dis'];
+        console.log('Campo "dis" obtenido de Firestore:', this.dis);
+      } else {
+        console.warn('No se encontró el documento del usuario.');
+      }
+    } catch (error) {
+      console.error('Error al obtener el campo "dis" de Firestore:', error);
+    }
+  }
+
+  obtenerDatosRealtimeDatabase(): void {
+    if (!this.user) {
+      console.warn('Usuario no definido.');
+      return;
+    }
+    const latRef = ref(this.database, `/Dispositivos/${this.dis}/ubi/lat`);
+    const lngRef = ref(this.database, `/Dispositivos/${this.dis}/ubi/lng`);
+
+    onValue(latRef, (snapshot) => {
+      this.latt = snapshot.val();
+      console.log('Latitud actualizada:', this.latt);
+      this.verificarEInicializarMapa();
+    });
+
+    onValue(lngRef, (snapshot) => {
+      this.lngg = snapshot.val();
+      console.log('Longitud actualizada:', this.lngg);
+      this.verificarEInicializarMapa();
+    });
+  }
+
+  verificarEInicializarMapa(): void {
+    if (this.latt !== null && this.lngg !== null) {
+      this.initMap();
+    }
   }
 
   async initMap(): Promise<void> {
-    // Verifica que ambos valores estén definidos
-    if (this.latt !== undefined && this.lngg !== undefined) {
-      // Posición inicial del mapa
-      const position = { lat: this.latt, lng: this.lngg };
+    try {
+      if (this.latt !== null && this.lngg !== null) {
+        const position = { lat: this.latt, lng: this.lngg };
 
-      // Importar las bibliotecas necesarias
-      const { Map } = (await google.maps.importLibrary('maps')) as google.maps.MapsLibrary;
-      const { AdvancedMarkerElement } = await google.maps.importLibrary("marker") as google.maps.MarkerLibrary;
+        const { Map } = (await google.maps.importLibrary('maps')) as google.maps.MapsLibrary;
+        const { AdvancedMarkerElement } = (await google.maps.importLibrary('marker')) as google.maps.MarkerLibrary;
 
-      // Inicializar el mapa centrado en la posición
-      const map = new Map(document.getElementById('map') as HTMLElement, {
-        zoom: 13,
-        center: position,
-        mapId: 'DEMO_MAP_ID', // Asegúrate de usar un ID de mapa válido configurado en Google Cloud Console
-      });
+        const map = new Map(document.getElementById('map') as HTMLElement, {
+          zoom: 13,
+          center: position,
+          mapId: 'DEMO_MAP_ID',
+        });
 
-      // Agregar el marcador en la posición especificada
-      new AdvancedMarkerElement({
-        map: map,
-        position: position,
-        title: 'Ubicación',
-      });
-    } else {
-      console.warn("Latitud o longitud no están definidos aún.");
+        new AdvancedMarkerElement({
+          map: map,
+          position: position,
+          title: 'Ubicación',
+        });
+
+        console.log('Mapa inicializado correctamente.');
+      } else {
+        console.warn('Latitud o longitud no están definidas.');
+      }
+    } catch (error) {
+      console.error('Error al inicializar el mapa:', error);
     }
   }
 }

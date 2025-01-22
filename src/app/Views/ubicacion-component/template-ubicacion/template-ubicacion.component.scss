@@ -1,0 +1,26 @@
+.container {
+  display: grid;
+  width: 100%;
+  height: 100vh;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 400px 1fr 400px;
+  gap: 20px 0px; /* Añade 20px de espacio vertical entre las filas */
+  grid-auto-flow: row;
+  grid-template-areas:
+    "mapa mapa ."
+    "datos datos ."
+    "button button .";
+}
+
+.mapa {
+  grid-area: mapa;
+  padding-top: 65px;
+}
+
+.datos {
+  grid-area: datos;
+}
+
+.button {
+  grid-area: button;
+}

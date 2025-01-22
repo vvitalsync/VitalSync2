@@ -1,40 +1,16 @@
-/* General SCSS for Inicio Screen */
 .inicio-content {
-  --ion-background-color: #f0f4f8; /* Fondo más suave */
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start; /* Alineación superior */
-  padding: 1px;
-  gap: 16px;
-}
+  --background: #C8E5F5;
+  padding: 8px;
 
-.content-wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 10px; /* Mayor espaciado para claridad */
-  height: fit-content;
-}
+  .content-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 5px;
+  }
 
-.image-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: var(--ion-color-light);
-  padding-top: 70px;
-}
-
-.datos-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: stretch;
-}
-
-.configuracion-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  max-width: 600px;
-  padding: 16px;
+  .image-container,
+  .datos-container {
+    width: 100%;
+  }
 }

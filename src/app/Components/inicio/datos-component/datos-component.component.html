@@ -1,10 +1,17 @@
-<ion-card class="datos-card">
-  <ion-card-header>
-    <ion-card-title>📊 Datos Registrados</ion-card-title>
-  </ion-card-header>
+
   <ion-card-content>
-    <p class="datos-texto">
-      Consulta información relevante y actualizada de forma clara y sencilla.
-    </p>
+    <ul class="info-list">
+      <li class="info-item">
+        <span class="info-label">Nombre:</span>
+        <span class="info-value">{{ nombre }}</span>
+      </li>
+      <li class="info-item">
+        <span class="info-label">Edad:</span>
+        <span class="info-value">{{ edad }}</span>
+      </li>
+      <li class="info-item">
+        <span class="info-label">Texto:</span>
+        <span class="info-value">{{ texto }}</span>
+      </li>
+    </ul>
   </ion-card-content>
-</ion-card>

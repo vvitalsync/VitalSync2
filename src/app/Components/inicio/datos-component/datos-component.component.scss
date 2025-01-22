@@ -1,54 +1,32 @@
-.datos-card {
-  margin: 16px 0; /* Espaciado vertical entre tarjetas */
-  padding: 16px; /* Espaciado interno */
-  border: 1px solid #e0e0e0; /* Borde sutil */
-  border-left: 4px solid #007bff; /* Línea decorativa azul */
-  background-color: #ffffff;
-  transition: box-shadow 0.3s ease;
-}
 
-.datos-card:hover {
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-}
 
-ion-card-header {
-  margin-bottom: 12px;
-  padding: 0;
-  background: none;
-  color: #333;
-  text-align: left;
-}
 
-ion-card-title {
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: #007bff;
-  margin: 0;
-}
+  .info-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 
-.datos-texto {
-  margin: 0;
-  text-align: justify;
-  color: #555;
-  font-size: 0.95rem;
-  line-height: 1.6;
-}
-/* Responsive Design */
-@media (max-width: 768px) {
-  .content-wrapper {
-    gap: 16px;
+    .info-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 6px 10px;
+      border: 1px solid #e5e5e5;
+      border-radius: 6px;
+      background-color: #fafafa;
+
+      .info-label {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: #1abc9c;
+      }
+
+      .info-value {
+        font-size: 0.9rem;
+        color: #555;
+      }
+    }
   }
 
-  .datos-card,
-  .image-card {
-    margin: 8px 0;
-  }
-
-  ion-card-title {
-    font-size: 1rem;
-  }
-
-  .datos-texto {
-    font-size: 0.85rem;
-  }
-}
