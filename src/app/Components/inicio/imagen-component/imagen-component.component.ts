@@ -12,29 +12,12 @@ import { UserService } from '../../../Services/user-service.service';
   styleUrls: ['./imagen-component.component.scss'],
 })
 export class ImagenComponentComponent implements OnInit {
-  private firestore = inject(Firestore);
-  img: string | undefined = undefined;
-  user: string ='emilio123'
+  userImage: string= "/assets/user.png";
   constructor(private userService: UserService,) {}
 
   ngOnInit(): void {
-    this.obtenerDatosFirebase();
+
   }
 
-  obtenerDatosFirebase() {
-    // Referencia al documento en Firestore
-    const datosDocRef = doc(this.firestore, 'usuario/'+this.user);
-
-    // Suscribirse a los cambios en el documento
-    onSnapshot(datosDocRef, (docSnapshot) => {
-      if (docSnapshot.exists()) {
-        const data = docSnapshot.data();
-        this.img = data['img']; // Obtener el valor del campo 'pulso'
-        console.log('Nombre:', this.img);
-      } else {
-        console.log('No se encontró el documento en Firestore');
-      }
-    });
-  }
 }
 

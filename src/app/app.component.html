@@ -32,5 +32,7 @@
   </ion-content>
 </ion-menu>
 
-<!-- Contenido principal -->
-<ion-router-outlet id="main-content"></ion-router-outlet>
+<ion-router-outlet 
+  id="main-content" 
+  [class.blur]="!isAuthenticated">
+</ion-router-outlet>

@@ -1,13 +1,13 @@
 
-  <ion-card-header>
-    <ion-card-title>Imagen Guardada</ion-card-title>
-  </ion-card-header>
+
   <ion-card-content>
-    <div>
-      <img [src]="img" class="image-preview" *ngIf="img; else noImage" />
+    <div *ngIf="userImage; else noImage">
+      <img [src]="userImage"  />
     </div>
     <ng-template #noImage>
       <p class="no-image-text">No hay imágenes disponibles.</p>
     </ng-template>
   </ion-card-content>
+
+
 

@@ -14,7 +14,7 @@ import { UserService } from '../../../Services/user-service.service';
   styleUrls: ['./conf-component.component.scss'],
 })
 export class ConfComponentComponent implements OnInit {
-  texto: string = '';
+  informacion: string = '';
   nuevaImagen: File | null = null;
   nombre: string = '';
   edad: number | null = null;
@@ -44,7 +44,7 @@ export class ConfComponentComponent implements OnInit {
 
       if (docSnapshot.exists()) {
         const data = docSnapshot.data();
-        this.texto = data['texto'] || '';
+        this.informacion = data['informacion'] || '';
         this.nombre = data['nombre'] || '';
         this.edad = data['edad'] || null;
         this.dispositivo = data['dis'] || null;
@@ -69,25 +69,15 @@ export class ConfComponentComponent implements OnInit {
     try {
       const infoRef = doc(this.firestore, 'usuario/'+this.user);
 
-      // Subir imagen a Firebase Storage si existe
-      let imagenURL: string | null = null;
-      if (this.nuevaImagen) {
-        const storage = getStorage();
-        const filePath = `images/${uuidv4()}_${this.nuevaImagen.name}`;
-        const fileRef = ref(storage, filePath);
-
-        // Subir el archivo y obtener la URL de descarga
-        await uploadBytes(fileRef, this.nuevaImagen);
-        imagenURL = await getDownloadURL(fileRef);
-      }
+  
 
       // Crear objeto con los campos a actualizar
       const datosActualizados: any = {};
-      if (this.texto) datosActualizados.texto = this.texto;
+      if (this.informacion) datosActualizados.informacion = this.informacion;
       if (this.nombre) datosActualizados.nombre = this.nombre;
       if (this.edad !== null) datosActualizados.edad = this.edad;
       if (this.dispositivo) datosActualizados.dis = this.dispositivo;
-      if (imagenURL) datosActualizados.img = imagenURL;
+
 
       // Actualizar los datos en Firestore
       await updateDoc(infoRef, datosActualizados);

@@ -4,7 +4,7 @@ import { Firestore, doc, getDoc } from '@angular/fire/firestore';
 import { IonicModule } from '@ionic/angular';
 import { DatosComponentComponent } from '../../inicio/datos-component/datos-component.component';
 import { UserService } from '../../../Services/user-service.service'; // Importar el servicio
-
+import { Router } from '@angular/router';
 @Component({
   standalone: true,
   selector: 'app-signosv-component',
@@ -19,6 +19,7 @@ export class SignosvComponentComponent implements OnInit {
   user: string | null = null;
 
   constructor(
+    private router: Router,
     private database: Database,
     private userService: UserService,
     private firestore: Firestore // Inyectar Firestore
@@ -37,6 +38,7 @@ export class SignosvComponentComponent implements OnInit {
       });
     } else {
       console.error('Usuario no definido.');
+      this.router.navigate(['/login']);
     }
   }
 

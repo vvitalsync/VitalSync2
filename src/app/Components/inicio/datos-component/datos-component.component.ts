@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { Firestore, doc, onSnapshot } from '@angular/fire/firestore';
 import { inject } from '@angular/core';
 import { UserService } from '../../../Services/user-service.service';
+import { Router } from '@angular/router';
 @Component({
   standalone: true,
   imports: [IonicModule, CommonModule],
@@ -14,16 +15,24 @@ import { UserService } from '../../../Services/user-service.service';
 export class DatosComponentComponent implements OnInit {
   private firestore = inject(Firestore);
 
-  user: string = 'emilio123'; 
+  user: string | null = null; // Cambiamos para obtener el usuario del servicio
   nombre: string | undefined = undefined;
   edad: number | undefined = undefined;
-  texto: number | undefined = undefined;
+  informacion: string | undefined = '';
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService,private router: Router,) {}
 
   ngOnInit(): void {
-    this.userService.setUser(this.user);
-    this.obtenerDatosFirebase();
+    // Obtenemos el usuario del servicio
+    this.user = this.userService.getUser();
+
+    if (this.user) {
+      this.obtenerDatosFirebase();
+      console.warn('Usuario establecido'+this.user);
+    } else {
+      console.warn('No hay un usuario establecido en el servicio UserService.');
+      this.router.navigate(['/login']);
+    }
   }
 
   obtenerDatosFirebase() {
@@ -37,14 +46,13 @@ export class DatosComponentComponent implements OnInit {
     onSnapshot(datosDocRef, (docSnapshot) => {
       if (docSnapshot.exists()) {
         const data = docSnapshot.data();
-        this.texto = data['texto'];
+        this.informacion = data['informacion'];
         this.edad = data['edad'];
         this.nombre = data['nombre'];
 
-        console.log('Text:', this.texto);
+        console.log('Texto:', this.informacion);
         console.log('Edad:', this.edad);
         console.log('Nombre:', this.nombre);
-
       } else {
         console.log('No se encontró el documento en Firestore');
       }
