@@ -8,7 +8,7 @@ import { ConfiguracionComponentComponent } from '../../Components/inicio/configu
 @Component({
   standalone: true,
   selector: 'app-inicio-component',
-  imports: [IonicModule, ImagenComponentComponent, DatosComponentComponent, ConfComponentComponent, ConfiguracionComponentComponent],
+  imports: [IonicModule, ImagenComponentComponent, DatosComponentComponent, ConfComponentComponent, ConfiguracionComponentComponent,],
   templateUrl: './inicio-component.component.html',
   styleUrls: ['./inicio-component.component.scss'],
 })

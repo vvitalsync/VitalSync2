@@ -1,13 +1,10 @@
-
-
-  <ion-card-content>
-    <div *ngIf="userImage; else noImage">
-      <img [src]="userImage"  />
+<ion-card-content>
+  <div class="image-container">
+    <div class="image-wrapper" *ngIf="userImage; else noImage">
+      <img [src]="userImage" alt="Foto de perfil" />
     </div>
-    <ng-template #noImage>
-      <p class="no-image-text">No hay imágenes disponibles.</p>
-    </ng-template>
-  </ion-card-content>
-
-
-
+  </div>
+  <ng-template #noImage>
+    <p class="no-image-text">No hay imágenes disponibles.</p>
+  </ng-template>
+</ion-card-content>

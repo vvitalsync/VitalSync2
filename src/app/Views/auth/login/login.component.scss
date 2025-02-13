@@ -1,95 +1,131 @@
 .login-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background-color: #121212;
-    padding: 20px;
-  
-    .login-form {
-      background: #1E1E1E;
-      border-radius: 8px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
-      padding: 30px;
-      max-width: 400px;
-      width: 100%;
-      text-align: center;
-  
-      h2 {
-        margin-bottom: 20px;
-        color: #EAEAEA;
-        font-size: 1.5rem;
-      }
-  
-      form {
-        .form-group {
-          margin-bottom: 20px;
-          text-align: left;
-  
-          label {
-            display: block;
-            font-weight: bold;
-            margin-bottom: 5px;
-            color: #B0B0B0;
-          }
-  
-          .form-control {
-            width: 100%;
-            padding: 10px;
-            font-size: 1rem;
-            border: 1px solid #333333;
-            background-color: #2A2A2A;
-            color: #EAEAEA;
-            border-radius: 4px;
-            transition: border-color 0.3s;
-  
-            &:focus {
-              border-color: #007BFF;
-              outline: none;
-            }
-          }
-  
-          .text-danger {
-            color: #FF5252;
-            font-size: 0.875rem;
-            margin-top: 5px;
-            display: block;
-          }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f4f4f9;
+  padding: 20px;
+
+  .login-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.15);
+    padding: 40px;
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+
+    h2 {
+      margin-bottom: 8px;
+      color: #333;
+      font-size: 1.8rem;
+      font-weight: 600;
+    }
+
+    .subtitle {
+      color: #666;
+      font-size: 1rem;
+      margin-bottom: 20px;
+    }
+
+    form {
+      .form-group {
+        margin-bottom: 18px;
+        text-align: left;
+
+        label {
+          display: block;
+          font-weight: 600;
+          margin-bottom: 6px;
+          color: #333;
+          font-size: 0.95rem;
         }
-  
-        .btn-primary {
-          display: inline-block;
+
+        .form-control {
           width: 100%;
-          padding: 10px;
+          padding: 12px;
           font-size: 1rem;
-          color: #fff;
-          background-color: #007BFF;
-          border: none;
-          border-radius: 4px;
-          cursor: pointer;
-          transition: background-color 0.3s;
-  
-          &:hover {
-            background-color: #0056B3;
+          border: 1px solid #ccc;
+          border-radius: 6px;
+          background-color: #f4f4f9;
+          color: #333;
+          transition: border-color 0.3s ease-in-out;
+
+          &:focus {
+            border-color: #007bff;
+            outline: none;
+            background-color: #fff;
           }
         }
-  
-        div {
-          margin-top: 20px;
-          font-size: 0.875rem;
-  
-          a {
-            color: #007BFF;
-            text-decoration: none;
-            font-weight: bold;
-            transition: color 0.3s;
-  
-            &:hover {
-              color: #0056B3;
-            }
+
+        .text-danger {
+          color: #ff5252;
+          font-size: 0.85rem;
+          margin-top: 5px;
+          display: block;
+        }
+      }
+
+      .options {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.9rem;
+        margin-bottom: 20px;
+
+        .checkbox {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          font-size: 0.9rem;
+          color: #333;
+        }
+
+        .forgot-password {
+          color: #007bff;
+          cursor: pointer;
+          font-weight: bold;
+          transition: color 0.3s;
+
+          &:hover {
+            color: #0056b3;
+          }
+        }
+      }
+
+      .btn-primary {
+        display: block;
+        width: 100%;
+        padding: 12px;
+        font-size: 1rem;
+        font-weight: 600;
+        color: #fff;
+        background-color: #007bff;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+
+        &:hover {
+          background-color: #0056b3;
+        }
+      }
+
+      .register-link {
+        margin-top: 20px;
+        font-size: 0.9rem;
+
+        a {
+          color: #007bff;
+          font-weight: bold;
+          cursor: pointer;
+          transition: color 0.3s;
+
+          &:hover {
+            color: #0056b3;
           }
         }
       }
     }
   }
-  
+}

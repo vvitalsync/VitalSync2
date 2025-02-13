@@ -1,89 +1,37 @@
-ion-card {
-  margin: 4px;
-  box-shadow: 0 2px 4px rgba(163, 207, 204, 0.1);
-  background-color: #f8f9fa; /* Fondo claro de la tarjeta */
-  max-height: max-content; /* Establece una altura máxima para la tarjeta */
-  /* Sin border-radius */
+.heart-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
-  /* Encabezado */
-  ion-card-header {
-    background-color: #007bff;
-    color: #ffffff;
-    text-align: center;
-    padding: 10px;
+.heart-box {
+  width: 70px;
+  height: 70px;
+  background: #003366; /* Azul oscuro */
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+}
 
-    ion-card-title {
-      font-size: 1rem;
-      font-weight: bold;
-      text-transform: uppercase;
-    }
-  }
+.heart-image {
+  width: 30px;
+  height: 30px;
+  animation: heartbeat 1.2s infinite;
+}
 
-  /* Contenido */
-  ion-card-content {
-    padding: 8px;
+.bpm {
+  font-size: 12px;
+  font-weight: bold;
+  color: white;
+  margin-top: 5px;
+}
 
-    .sensor-data {
-      display: flex;
-      justify-content: space-between; /* Reparte el espacio a izquierda y derecha */
-      align-items: center;
-      padding: px;
-      position: relative;
-
-      /* Línea divisoria sutil entre los dos datos */
-      &::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 50%;
-        width: 1px; /* Ancho de la línea */
-        background-color: rgba(0, 0, 0, 0.1); /* Línea sutil */
-        margin-left: -1px; /* Asegura que la línea esté justo en el centro */
-      }
-
-      .data-item {
-        display: flex;
-        flex-direction: column;
-        text-align: center; /* Centrado del texto */
-        flex: 1; /* Asegura que ambos lados ocupen el mismo espacio */
-
-        ion-label {
-          font-size: 0.9rem;
-          color: #495057;
-
-          &:first-of-type {
-            font-weight: bold;
-            margin-bottom: 4px; /* Espacio entre etiqueta y valor */
-          }
-
-          &:last-of-type {
-            color: #6c757d;
-            font-style: italic;
-          }
-        }
-      }
-    }
-  }
-
-  /* Responsive Design */
-  @media (max-width: 768px) {
-    ion-card-content {
-      .sensor-data {
-        flex-wrap: nowrap; /* Asegura que los datos permanezcan en una fila */
-        justify-content: space-between;
-        align-items: center; /* Los datos siguen centrados */
-      }
-    }
-  }
-
-  @media (max-width: 480px) {
-    ion-card-content {
-      .sensor-data {
-        .data-item {
-          font-size: 0.85rem; /* Reducir tamaño de texto en pantallas muy pequeñas */
-        }
-      }
-    }
-  }
+/* Animación del corazón */
+@keyframes heartbeat {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
 }

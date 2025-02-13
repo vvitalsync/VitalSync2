@@ -14,8 +14,7 @@ import { Router } from '@angular/router';
 })
 export class SignosvComponentComponent implements OnInit {
   pulso: number | undefined = undefined;
-  saturacionOxigeno: number | undefined = undefined;
-  dis: string = 'SPET'; // Valor por defecto
+  dis: string | null= ''; // Valor por defecto
   user: string | null = null;
 
   constructor(
@@ -28,7 +27,7 @@ export class SignosvComponentComponent implements OnInit {
   ngOnInit(): void {
     this.user = this.userService.getUser();
     console.log('Usuario:', this.user);
-
+    
     this.solicitarPermisoNotificaciones();
 
     if (this.user) {
@@ -48,7 +47,7 @@ export class SignosvComponentComponent implements OnInit {
       const userDocSnap = await getDoc(userDocRef);
 
       if (userDocSnap.exists()) {
-        this.dis = userDocSnap.data()['dis'] || 'SPET'; // Asignar el valor de "dis"
+        this.dis = userDocSnap.data()['dis']; // Asignar el valor de "dis"
         console.log('Campo "dis" obtenido de Firestore:', this.dis);
       } else {
         console.warn('No se encontró el documento del usuario.');
@@ -67,11 +66,6 @@ export class SignosvComponentComponent implements OnInit {
       this.verificarPulsoIrregular();
     });
 
-    const satOxiRef = ref(this.database, `/Dispositivos/${this.dis}/sensor/sat_oxi`);
-    onValue(satOxiRef, (snapshot) => {
-      this.saturacionOxigeno = snapshot.val();
-      console.log('Saturación de Oxígeno:', this.saturacionOxigeno);
-    });
   }
 
   verificarPulsoIrregular(): void {

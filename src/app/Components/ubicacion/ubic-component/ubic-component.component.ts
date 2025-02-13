@@ -18,7 +18,7 @@ export class UbicComponentComponent implements OnInit {
   latt: number | null = null;
   lngg: number | null = null;
   user: string | null = '';
-  dis:  string | null='';
+  dis: string | null = '';
 
   constructor(private userService: UserService) {}
 
@@ -96,16 +96,24 @@ export class UbicComponentComponent implements OnInit {
         const { AdvancedMarkerElement } = (await google.maps.importLibrary('marker')) as google.maps.MarkerLibrary;
 
         const map = new Map(document.getElementById('map') as HTMLElement, {
-          zoom: 13,
+          zoom: 16,
           center: position,
           mapId: 'DEMO_MAP_ID',
+          disableDefaultUI: true, // Desactiva todos los controles por defecto
+          zoomControl: false, // Desactiva el control de zoom
+          mapTypeControl: false, // Desactiva el control de tipo de mapa (mapa/satélite)
+          streetViewControl: false, // Desactiva el control de Street View (personita)
+          fullscreenControl: false, // Desactiva el control de pantalla completa
         });
+        // Crear un elemento HTML personalizado para el marcador
+          
 
-        new AdvancedMarkerElement({
-          map: map,
-          position: position,
-          title: 'Ubicación',
-        });
+      // Crear el AdvancedMarkerElement con el elemento personalizado
+      new AdvancedMarkerElement({
+        map: map,
+        position: position,
+        
+      });
 
         console.log('Mapa inicializado correctamente.');
       } else {

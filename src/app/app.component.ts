@@ -16,6 +16,7 @@ export class AppComponent implements OnInit {
   title = 'VitalSync';
   isSidebarOpen: boolean = false;
   isAuthenticated: boolean = false;
+  isAuthPage: boolean = false; // Detecta si está en login o register
 
   constructor(private authService: AuthService, private router: Router) {}
 
@@ -23,22 +24,26 @@ export class AppComponent implements OnInit {
     // Suscribirse al estado de autenticación
     this.authService.authState().subscribe((user) => {
       this.isAuthenticated = !!user;
+      this.checkAuthPage();
 
-      // Redirigir al login si no está autenticado
-      if (!user) {
+      // Si no está autenticado, redirigir al login
+      if (!this.isAuthenticated) {
         this.router.navigate(['/login']);
       }
     });
+
+    // Detectar cambios en la ruta
+    this.router.events.subscribe(() => {
+      this.checkAuthPage();
+    });
+  }
+
+  private checkAuthPage() {
+    const currentRoute = this.router.url;
+    this.isAuthPage = currentRoute.includes('/login') || currentRoute.includes('/register');
   }
 
   toggleSidebar() {
     this.isSidebarOpen = !this.isSidebarOpen;
-  }
-
-  // Método para manejar el cierre del modal
-  onLoginDismiss() {
-    console.log('El modal de inicio de sesión se cerró');
-    this.isAuthenticated = true;
-    // Aquí puedes implementar alguna lógica adicional si es necesario
   }
 }

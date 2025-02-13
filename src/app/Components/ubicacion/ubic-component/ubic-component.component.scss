@@ -1,15 +1,7 @@
 #map {
-    height: 60vh; /* Ajusta el tamaño según necesites */
-    width: 98%;
-    margin: 0 auto; /* Centra horizontalmente */
-    display: block; /* Evita espacios en blanco debajo del mapa */
-  }
-  
-    html, body {
-    height: 70%;
-    width: 100%;
-    display: flex;
-    justify-content: center; /* Centra horizontalmente */
-    align-items: center; /* Centra verticalmente */
-    }
-  
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}

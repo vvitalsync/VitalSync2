@@ -1,6 +1,4 @@
 
-
-
   .info-list {
     list-style: none;
     padding: 0;
@@ -11,21 +9,22 @@
 
     .info-item {
       display: flex;
-      justify-content: space-between;
+      justify-content:first baseline;
       padding: 6px 10px;
       border: 1px solid #e5e5e5;
-      border-radius: 6px;
       background-color: #fafafa;
 
       .info-label {
         font-size: 0.9rem;
         font-weight: 600;
-        color: #1abc9c;
+        color: black;
       }
 
       .info-value {
         font-size: 0.9rem;
         color: #555;
+        text-align: left;
+        padding-left: 6px;
       }
     }
   }

@@ -87,4 +87,15 @@ ion-menu-shadow {
   ion-icon {
     font-size: 18px;
   }
+  .custom-header {
+    height: 80px; /* Puedes ajustar este valor */
+    font-size: 20px; /* Tamaño de fuente más grande */
+    display: flex;
+    align-items: center;
+  }
+  
+  ion-title {
+    font-size: 22px;
+    font-weight: bold;
+  }
 }

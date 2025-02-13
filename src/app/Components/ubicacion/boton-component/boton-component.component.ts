@@ -38,7 +38,7 @@ export class BotonComponentComponent implements OnInit {
       const userDocSnap = await getDoc(userDocRef);
 
       if (userDocSnap.exists()) {
-        this.dis = userDocSnap.data()['dis'] || 'SPET'; // Asignar el valor de "dis"
+        this.dis = userDocSnap.data()['dis'] ; // Asignar el valor de "dis"
         console.log('Campo "dis" obtenido de Firestore:', this.dis);
       } else {
         console.warn('No se encontró el documento del usuario.');

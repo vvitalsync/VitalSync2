@@ -1,18 +1,6 @@
-<ion-card>
-  <ion-card-header>
-    <ion-card-title>Datos del Sensor</ion-card-title>
-  </ion-card-header>
-  <ion-card-content>
-    <div class="sensor-data">
-      <div class="data-item">
-        <ion-label>Pulso:</ion-label>
-        <ion-label>{{ pulso }} lpm</ion-label>
-      </div>
-      <div class="data-item">
-        <ion-label>Saturación de Oxígeno:</ion-label>
-        <ion-label>{{ saturacionOxigeno }}%</ion-label>
-      </div>
-    </div>
-  </ion-card-content>
-</ion-card>
-
+<div class="heart-container">
+  <div class="heart-box">
+    <img src="assets/corazon.png" alt="Corazón" class="heart-image">
+    <span class="bpm">{{ pulso }} lpm</span>
+  </div>
+</div>
