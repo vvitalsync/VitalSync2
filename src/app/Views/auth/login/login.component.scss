@@ -1,130 +1,96 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
+
 .login-container {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #f4f4f9;
   padding: 20px;
+  background: linear-gradient(135deg, #007bff, #ffffff, #007bff);
 
   .login-card {
     background: #fff;
     border-radius: 12px;
-    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.15);
     padding: 40px;
     max-width: 400px;
     width: 100%;
     text-align: center;
+  }
 
-    h2 {
-      margin-bottom: 8px;
-      color: #333;
-      font-size: 1.8rem;
+  h2 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 2.2rem;
+    font-weight: 600;
+    color: #007bff;
+    margin-bottom: 10px;
+  }
+
+  .subtitle {
+    color: #666;
+    font-size: 1rem;
+    margin-bottom: 20px;
+  }
+
+  .form-group {
+    margin-bottom: 18px;
+    text-align: left;
+
+    label {
+      display: block;
       font-weight: 600;
+      margin-bottom: 6px;
+      color: #333;
+      font-size: 0.95rem;
     }
 
-    .subtitle {
-      color: #666;
+    .form-control {
+      width: 100%;
+      padding: 12px;
       font-size: 1rem;
-      margin-bottom: 20px;
+      border: 2px solid #007bff;
+      border-radius: 8px;
+      background-color: #fff;
+      color: #333;
+      transition: all 0.3s ease-in-out;
+
+      &:focus {
+        border-color: #0056b3;
+        outline: none;
+        background-color: #f4f4f9;
+      }
     }
+  }
 
-    form {
-      .form-group {
-        margin-bottom: 18px;
-        text-align: left;
+  .btn-primary {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
 
-        label {
-          display: block;
-          font-weight: 600;
-          margin-bottom: 6px;
-          color: #333;
-          font-size: 0.95rem;
-        }
+    &:hover {
+      background-color: #0056b3;
+    }
+  }
 
-        .form-control {
-          width: 100%;
-          padding: 12px;
-          font-size: 1rem;
-          border: 1px solid #ccc;
-          border-radius: 6px;
-          background-color: #f4f4f9;
-          color: #333;
-          transition: border-color 0.3s ease-in-out;
+  .register-link {
+    margin-top: 20px;
+    font-size: 0.9rem;
 
-          &:focus {
-            border-color: #007bff;
-            outline: none;
-            background-color: #fff;
-          }
-        }
+    a {
+      color: #007bff;
+      font-weight: bold;
+      cursor: pointer;
+      transition: color 0.3s;
 
-        .text-danger {
-          color: #ff5252;
-          font-size: 0.85rem;
-          margin-top: 5px;
-          display: block;
-        }
-      }
-
-      .options {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        font-size: 0.9rem;
-        margin-bottom: 20px;
-
-        .checkbox {
-          display: flex;
-          align-items: center;
-          gap: 6px;
-          font-size: 0.9rem;
-          color: #333;
-        }
-
-        .forgot-password {
-          color: #007bff;
-          cursor: pointer;
-          font-weight: bold;
-          transition: color 0.3s;
-
-          &:hover {
-            color: #0056b3;
-          }
-        }
-      }
-
-      .btn-primary {
-        display: block;
-        width: 100%;
-        padding: 12px;
-        font-size: 1rem;
-        font-weight: 600;
-        color: #fff;
-        background-color: #007bff;
-        border: none;
-        border-radius: 6px;
-        cursor: pointer;
-        transition: background-color 0.3s;
-
-        &:hover {
-          background-color: #0056b3;
-        }
-      }
-
-      .register-link {
-        margin-top: 20px;
-        font-size: 0.9rem;
-
-        a {
-          color: #007bff;
-          font-weight: bold;
-          cursor: pointer;
-          transition: color 0.3s;
-
-          &:hover {
-            color: #0056b3;
-          }
-        }
+      &:hover {
+        color: #0056b3;
       }
     }
   }

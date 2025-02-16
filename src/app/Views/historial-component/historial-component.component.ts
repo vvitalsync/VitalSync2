@@ -22,7 +22,7 @@ export class HistorialComponentComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     // Obtener usuario actual
-    this.user = this.userService.getUser ();
+    this.user = this.userService.getUser();
 
     // Verificar si el usuario está autenticado
     if (!this.user) {
@@ -55,11 +55,11 @@ export class HistorialComponentComponent implements OnInit, OnDestroy {
           };
 
           // Insertar la nueva entrada al inicio del historial
-          this.historial.push(nuevaEntrada);
+          this.historial.unshift(nuevaEntrada);
 
           // Mantener solo las últimas 5 entradas
           if (this.historial.length > 5) {
-            this.historial.pop();
+            this.historial.pop(); // Eliminar el último elemento si hay más de 5
           }
         } else {
           console.warn('No hay datos disponibles en /Dispositivos/SPET.');
