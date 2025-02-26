@@ -1,0 +1,21 @@
+.emergency-button {
+  width: 100%;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 12px; /* Unificar padding */
+  border-radius: 8px; /* Igualar borde redondeado */
+  text-transform: uppercase;
+  color: white;
+  background-color: red;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out, transform 0.1s ease-in-out;
+
+  &:hover {
+    background-color: darkred;
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+}

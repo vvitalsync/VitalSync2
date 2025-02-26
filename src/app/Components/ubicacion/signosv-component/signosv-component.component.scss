@@ -2,8 +2,10 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 10px; /* Espacio entre las cajas */
 }
 
+/* Estilo del pulso */
 .heart-box {
   width: 70px;
   height: 70px;
@@ -29,9 +31,48 @@
   margin-top: 5px;
 }
 
-/* Animación del corazón */
+/* Estilo de la saturación de oxígeno */
+.oxygen-box {
+  width: 70px;
+  height: 70px;
+  background: #28a745; /* Verde */
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+}
+
+.oxygen-text {
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  display: flex;
+  align-items: baseline;
+}
+
+.small-two {
+  font-size: 17px;
+  vertical-align: super; /* Hace que el ₂ sea más pequeño y esté arriba */
+}
+
+.spo2 {
+  font-size: 12px;
+  font-weight: bold;
+  color: white;
+  margin-top: 5px;
+}
+
+
+/* Animaciones */
 @keyframes heartbeat {
   0% { transform: scale(1); }
   50% { transform: scale(1.2); }
   100% { transform: scale(1); }
+}
+
+@keyframes breathing {
+  0% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(1.1); opacity: 0.8; }
 }

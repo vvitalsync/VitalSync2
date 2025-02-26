@@ -1,79 +1,103 @@
-.container {
-  padding-top: 30px;
-  margin-top: 3rem; // Reducido para pantallas pequeñas
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
 
-  .row {
-    justify-content: center;
+.register-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  padding: 17px;
+  background: linear-gradient(135deg, #007bff, #ffffff, #007bff);
 
-    .col-md-6 {
-      .card {
-        background: #1E1E1E;
-        border: none;
+  .register-card {
+    background: #fff;
+    border-radius: 11px;
+    padding: 35px;
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+
+    h2 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 2rem;
+      font-weight: 600;
+      color: #007bff;
+      margin-bottom: 5px;
+    }
+
+    .subtitle {
+      color: #666;
+      font-size: 0.7rem;
+      margin-bottom: 13px;
+    }
+
+    .form-group {
+      margin-bottom: 12px;
+      text-align: left;
+
+      label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 6px;
+        color: #333;
+        font-size: 0.85rem;
+      }
+
+      .form-control {
+        width: 100%;
+        padding: 8px;
+        font-size: 1rem;
+        border: 1.5px solid #007bff;
         border-radius: 8px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+        background-color: #fff;
+        color: #333;
+        transition: all 0.3s ease-in-out;
 
-        .card-header {
-          background-color: #007BFF;
-          color: #fff;
-          padding: 1rem;
-          border-radius: 8px 8px 0 0;
-
-          h4 {
-            margin: 0;
-            font-size: 1.2rem;
-            font-weight: bold;
-            text-align: center;
-          }
+        &:focus {
+          border-color: #0056b3;
+          outline: none;
+          background-color: #f4f4f9;
         }
+      }
 
-        .card-body {
-          padding: 1.5rem; // Reducido para menos espacio en pantallas pequeñas
+      small.text-danger {
+        color: red;
+        font-size: 0.65rem;
+        margin-top: 4px;
+        display: block;
+      }
+    }
 
-          form {
-            .form-group {
-              margin-bottom: 1rem;
+    .btn-primary {
+      display: block;
+      width: 100%;
+      padding: 11px;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #fff;
+      background-color: #007bff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s;
 
-              label {
-                font-weight: bold;
-                margin-bottom: 0.5rem;
-                color: #B0B0B0;
-              }
+      &:hover {
+        background-color: #0056b3;
+      }
+    }
 
-              .form-control {
-                width: 100%;
-                padding: 0.6rem;
-                font-size: 0.9rem;
-                border: 1px solid #333333;
-                background-color: #2A2A2A;
-                color: #EAEAEA;
-                border-radius: 4px;
-                transition: border-color 0.3s;
+    .login-link {
+      margin-top: 19px;
+      font-size: 0.9rem;
 
-                &:focus {
-                  border-color: #007BFF;
-                  outline: none;
-                }
-              }
-            }
+      a {
+        color: #007bff;
+        font-weight: bold;
+        cursor: pointer;
+        transition: color 0.3s;
 
-            .btn-primary {
-              display: block;
-              width: 100%;
-              padding: 0.7rem;
-              font-size: 0.9rem;
-              font-weight: bold;
-              color: #fff;
-              background-color: #007BFF;
-              border: none;
-              border-radius: 4px;
-              cursor: pointer;
-              transition: background-color 0.3s;
-
-              &:hover {
-                background-color: #0056B3;
-              }
-            }
-          }
+        &:hover {
+          color: #0056b3;
         }
       }
     }
@@ -82,39 +106,23 @@
 
 /* Diseño responsivo */
 @media (max-width: 768px) {
-  .container {
-    margin-top: 2rem;
+  .register-container {
+    padding: 10px;
 
-    .card-body {
-      padding: 1rem;
-    }
-
-    form {
-      .form-group {
-        .form-control {
-          font-size: 0.85rem;
-          padding: 0.5rem;
-        }
-      }
-
-      .btn-primary {
-        font-size: 0.85rem;
-        padding: 0.6rem;
-      }
+    .register-card {
+      padding: 30px;
     }
   }
 }
 
 @media (max-width: 576px) {
-  .container {
-    margin-top: 1.5rem;
+  .register-container {
+    .register-card {
+      padding: 20px;
 
-    .card-header h4 {
-      font-size: 1rem;
-    }
-
-    .card-body {
-      padding: 0.8rem;
+      h2 {
+        font-size: 1.8rem;
+      }
     }
   }
 }

@@ -6,8 +6,12 @@
         <ion-menu-button></ion-menu-button>
       </ion-buttons>
       <ion-title>VitalSync</ion-title>
+      <ion-buttons slot="end" *ngIf="isAuthenticated">
+        <img src="assets/exit.png" alt="Cerrar sesión" width="90" height="100" (click)="confirmLogout()">
+      </ion-buttons>
     </ion-toolbar>
   </ion-header>
+  
 
   <!-- Menú lateral (solo si está autenticado) -->
   <ion-menu *ngIf="isAuthenticated" side="start" menuId="first" contentId="main-content">

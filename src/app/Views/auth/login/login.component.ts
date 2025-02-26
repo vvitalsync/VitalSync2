@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Firestore, doc, getDoc } from '@angular/fire/firestore';
+import { Firestore, collection, query, where, getDocs } from '@angular/fire/firestore';
 import { AuthService } from '../../../Services/auth.service';
-import { UserService } from '../../../Services/user-service.service'; // Importar el servicio UserService
+import { UserService } from '../../../Services/user-service.service';
 import { FormsModule } from '@angular/forms';
 import { NgIf } from '@angular/common';
 
@@ -16,13 +16,23 @@ import { NgIf } from '@angular/common';
 export class LoginComponent implements OnInit {
   correo: string = '';
   password: string = '';
+  recordarSesion: boolean = false; // Nuevo: Estado de "Recordar sesión"
 
   constructor(
     private router: Router,
     private firestore: Firestore,
     private authService: AuthService,
-    private userService: UserService // Inyectar el UserService
+    private userService: UserService
   ) {}
+
+  ngOnInit() {
+    // Verificar si hay una sesión guardada
+    const cedulaGuardada = localStorage.getItem('usuarioCedula');
+    if (cedulaGuardada) {
+      this.userService.setUser(cedulaGuardada);
+      this.router.navigate(['/inicio']);
+    }
+  }
 
   goToRegister() {
     this.router.navigate(['/register']);
@@ -38,23 +48,31 @@ export class LoginComponent implements OnInit {
       // Autenticar con Firebase Authentication
       await this.authService.login(this.correo, this.password).toPromise();
 
-      // Verificar si el usuario existe en Firestore
-      const userDocRef = doc(this.firestore, `usuario/${this.correo}`);
-      const userDoc = await getDoc(userDocRef);
+      // Buscar el usuario en Firestore usando el correo
+      const usuariosRef = collection(this.firestore, 'usuario');
+      const q = query(usuariosRef, where('correo', '==', this.correo), where('password', '==', this.password));
+      const querySnapshot = await getDocs(q);
 
-      if (userDoc.exists()) {
-        // Establecer el correo del usuario en el servicio UserService
+      if (!querySnapshot.empty) {
+        const userData = querySnapshot.docs[0].data();
+        const cedula = querySnapshot.docs[0].id; // La cédula es la clave en Firestore
+
+        // Guardar la cédula en UserService
+        this.userService.setUser(cedula);
+
+        // Si el usuario marcó "Recordar sesión", guardar la cédula en localStorage
+        if (this.recordarSesion) {
+          localStorage.setItem('usuarioCedula', cedula);
+        }
+
         alert('Inicio de sesión exitoso.');
-        this.router.navigate(['/inicio']); // Redirigir al inicio
-        this.userService.setUser(this.correo);
+        this.router.navigate(['/inicio']);
       } else {
-        alert('Usuario no encontrado en la base de datos.');
+        alert('Usuario no encontrado o contraseña incorrecta.');
       }
     } catch (error) {
       console.error('Error al iniciar sesión:', error);
       alert('Hubo un error al iniciar sesión. Intenta nuevamente.');
     }
   }
-
-  ngOnInit() {}
 }

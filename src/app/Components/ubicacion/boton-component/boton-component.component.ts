@@ -51,9 +51,10 @@ export class BotonComponentComponent implements OnInit {
   async sendFalseToDatabase(): Promise<void> {
     const path = '/Dispositivos/'+this.dis+'/estado'; // Ruta en la base de datos
     const dbRef = ref(this.db, path);
-
+    console.log('Dispositivo'+ this.dis);
+  
     try {
-      await set(dbRef, false); // Escribir "false" en Firebase
+      await set(dbRef, true); // Escribir "false" en Firebase
     } catch (error) {
       this.presentToast('Error al enviar "false" a Firebase: ', true);
       console.error('Error al enviar "false":', error);

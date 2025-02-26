@@ -3,8 +3,9 @@ import { Database, ref, onValue } from '@angular/fire/database';
 import { Firestore, doc, getDoc } from '@angular/fire/firestore';
 import { IonicModule } from '@ionic/angular';
 import { DatosComponentComponent } from '../../inicio/datos-component/datos-component.component';
-import { UserService } from '../../../Services/user-service.service'; // Importar el servicio
+import { UserService } from '../../../Services/user-service.service';
 import { Router } from '@angular/router';
+
 @Component({
   standalone: true,
   selector: 'app-signosv-component',
@@ -14,14 +15,15 @@ import { Router } from '@angular/router';
 })
 export class SignosvComponentComponent implements OnInit {
   pulso: number | undefined = undefined;
-  dis: string | null= ''; // Valor por defecto
+  saturacion: number | undefined = undefined; // Agregamos la saturación
+  dis: string | null = ''; 
   user: string | null = null;
 
   constructor(
     private router: Router,
     private database: Database,
     private userService: UserService,
-    private firestore: Firestore // Inyectar Firestore
+    private firestore: Firestore
   ) {}
 
   ngOnInit(): void {
@@ -31,7 +33,6 @@ export class SignosvComponentComponent implements OnInit {
     this.solicitarPermisoNotificaciones();
 
     if (this.user) {
-      // Obtener el valor de "dis" desde Firestore y luego suscribirse a Firebase
       this.obtenerCampoDis().then(() => {
         this.obtenerDatosFirebase();
       });
@@ -47,7 +48,7 @@ export class SignosvComponentComponent implements OnInit {
       const userDocSnap = await getDoc(userDocRef);
 
       if (userDocSnap.exists()) {
-        this.dis = userDocSnap.data()['dis']; // Asignar el valor de "dis"
+        this.dis = userDocSnap.data()['dis'];
         console.log('Campo "dis" obtenido de Firestore:', this.dis);
       } else {
         console.warn('No se encontró el documento del usuario.');
@@ -58,20 +59,33 @@ export class SignosvComponentComponent implements OnInit {
   }
 
   obtenerDatosFirebase(): void {
-    
     const pulsoRef = ref(this.database, `/Dispositivos/${this.dis}/sensor/pulso`);
+    const satRef = ref(this.database, `/Dispositivos/${this.dis}/sensor/sat_oxi`); // Referencia a la saturación
+
     onValue(pulsoRef, (snapshot) => {
       this.pulso = snapshot.val();
       console.log('Pulso:', this.pulso);
       this.verificarPulsoIrregular();
     });
 
+    onValue(satRef, (snapshot) => {
+      this.saturacion = snapshot.val();
+      console.log('Saturación de oxígeno:', this.saturacion);
+      this.verificarSaturacionBaja();
+    });
   }
 
   verificarPulsoIrregular(): void {
     if (this.pulso !== undefined && (this.pulso > 100 || this.pulso < 60)) {
       console.warn('Pulso irregular, por favor atender');
       this.enviarNotificacion('Pulso irregular', 'Por favor atender al paciente.');
+    }
+  }
+
+  verificarSaturacionBaja(): void {
+    if (this.saturacion !== undefined && this.saturacion < 95) {
+      console.warn('Saturación baja, posible hipoxia.');
+      this.enviarNotificacion('Saturación baja', 'Por favor atender al paciente. Posible hipoxia.');
     }
   }
 

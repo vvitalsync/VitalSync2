@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Firestore, doc, setDoc } from '@angular/fire/firestore';
+import { Firestore, doc, setDoc, getDoc } from '@angular/fire/firestore';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../../Services/auth.service';
 import { NgIf } from '@angular/common';
+
 @Component({
   standalone: true,
   imports: [FormsModule, RouterModule, NgIf],
@@ -16,8 +17,15 @@ export class RegisterComponent implements OnInit {
   correo: string = '';
   nombre: string = '';
   password: string = '';
-  edad: number = 0;
+  edad: number | null = null;
   informacion: string = '';
+
+  // Variables para mostrar errores
+  cedulaError: string = '';
+  correoError: string = '';
+  nombreError: string = '';
+  passwordError: string = '';
+  edadError: string = '';
 
   constructor(
     private firestore: Firestore,
@@ -30,32 +38,58 @@ export class RegisterComponent implements OnInit {
     return passwordRegex.test(this.password);
   }
 
-  isFormValid(): boolean {
+  isEmailValid(): boolean {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return (
-      this.cedula.length === 10 &&
-      emailRegex.test(this.correo) &&
-      this.nombre.trim().length > 0 &&
-      this.isPasswordValid() &&
-      this.edad >= 0 &&
-      this.edad <= 110
-    );
+    return emailRegex.test(this.correo);
   }
 
   async register() {
-    if (!this.isFormValid()) {
-      alert('Por favor completa correctamente todos los campos.');
+    this.resetErrors(); // Reiniciar los errores antes de validar
+
+    // Validaciones
+    if (this.cedula.length !== 10 || !/^\d+$/.test(this.cedula)) {
+      this.cedulaError = 'La cédula debe tener 10 dígitos numéricos.';
+    }
+    if (!this.isEmailValid()) {
+      this.correoError = 'Ingrese un correo válido.';
+    }
+    if (this.nombre.trim().length === 0) {
+      this.nombreError = 'El nombre es obligatorio.';
+    }
+    if (!this.isPasswordValid()) {
+      this.passwordError =
+        'La contraseña debe tener al menos 8 caracteres, una mayúscula y un número.';
+    }
+    if (this.edad === null || this.edad < 0 || this.edad > 110) {
+      this.edadError = 'La edad debe estar entre 0 y 110.';
+    }
+
+    // Si hay errores, no continuar
+    if (
+      this.cedulaError ||
+      this.correoError ||
+      this.nombreError ||
+      this.passwordError ||
+      this.edadError
+    ) {
       return;
     }
 
     try {
-      // Registrar el usuario en Firebase Authentication
+      // Verificar si la cédula ya existe en Firestore
+      const userDocRef = doc(this.firestore, `usuario/${this.cedula}`);
+      const userDocSnap = await getDoc(userDocRef);
+
+      if (userDocSnap.exists()) {
+        this.cedulaError = 'Esta cédula ya está registrada.';
+        return;
+      }
+
+      // Registrar usuario en Firebase Authentication
       await this.authService.register(this.correo, this.password).toPromise();
 
-      // Almacenar información adicional en Firestore
-      const userDocRef = doc(this.firestore, `usuario/${this.correo}`);
+      // Guardar en Firestore
       await setDoc(userDocRef, {
-        cedula: this.cedula,
         correo: this.correo,
         nombre: this.nombre,
         password: this.password,
@@ -65,12 +99,18 @@ export class RegisterComponent implements OnInit {
         informacion: this.informacion || '',
       });
 
-      alert('Registro exitoso.');
       this.router.navigate(['/login']);
     } catch (error) {
       console.error('Error al registrar:', error);
-      alert('Hubo un error al registrar. Intenta nuevamente.');
     }
+  }
+
+  resetErrors() {
+    this.cedulaError = '';
+    this.correoError = '';
+    this.nombreError = '';
+    this.passwordError = '';
+    this.edadError = '';
   }
 
   ngOnInit() {}

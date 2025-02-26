@@ -1,10 +1,21 @@
 .custom-button {
-  width: 100%;
+  width: 270px;
   font-size: 16px;
   font-weight: bold;
-  padding: 10px;
-  border-radius: 3px;
+  padding: 12px; /* Unificar padding */
+  border-radius: 8px; /* Igualar borde redondeado */
   text-transform: uppercase;
   color: white;
+  background-color: #007bff; /* Azul */
   border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out, transform 0.1s ease-in-out;
+
+  &:hover {
+    background-color: #0056b3;
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
 }

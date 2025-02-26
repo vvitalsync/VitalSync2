@@ -1,9 +1,10 @@
-import { Component, OnInit, OnDestroy, inject } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NgFor } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { UserService } from '../../Services/user-service.service';
-import { Database, ref, onValue, off } from '@angular/fire/database';
+import { HistorialService, HistorialItem } from '../../historial.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   standalone: true,
@@ -13,68 +14,37 @@ import { Database, ref, onValue, off } from '@angular/fire/database';
   styleUrls: ['./historial-component.component.scss'],
 })
 export class HistorialComponentComponent implements OnInit, OnDestroy {
-  historial: any[] = []; // Historial de las últimas 5 mediciones
-  user: string | null = null; // Usuario actual
-  private database = inject(Database); // Inyección del servicio Database
-  private dispositivoRef: any; // Referencia al nodo del dispositivo
+  historial: HistorialItem[] = [];
+  user: string | null = null;
+  private historialSubscription!: Subscription;
 
-  constructor(private router: Router, private userService: UserService) {}
+  constructor(
+    private router: Router,
+    private userService: UserService,
+    private historialService: HistorialService
+  ) {}
 
-  ngOnInit(): void {
-    // Obtener usuario actual
+  async ngOnInit() {
     this.user = this.userService.getUser();
 
-    // Verificar si el usuario está autenticado
     if (!this.user) {
       console.error('Usuario no definido. Redirigiendo a login...');
       this.router.navigate(['/login']);
       return;
     }
 
-    // Cargar el historial de Firebase
-    this.loadHistorial();
-  }
+    // Suscribirse a los cambios en el historial en tiempo real
+    this.historialSubscription = this.historialService.historial$.subscribe((historial) => {
+      this.historial = historial;
+    });
 
-  private loadHistorial() {
-    // Referencia al nodo del dispositivo en Firebase
-    this.dispositivoRef = ref(this.database, '/Dispositivos/SPET');
-
-    // Escuchar los cambios en tiempo real
-    onValue(
-      this.dispositivoRef,
-      (snapshot) => {
-        const data = snapshot.val();
-        if (data) {
-          const pulso = data.sensor?.pulso ?? 'N/A';
-
-          // Crear una nueva entrada de historial
-          const nuevaEntrada = {
-            titulo: 'Medición',
-            descripcion: 'Pulso: ' + pulso + ' bpm',
-            fecha: new Date().toLocaleString(), // Formato legible para la fecha
-          };
-
-          // Insertar la nueva entrada al inicio del historial
-          this.historial.unshift(nuevaEntrada);
-
-          // Mantener solo las últimas 5 entradas
-          if (this.historial.length > 5) {
-            this.historial.pop(); // Eliminar el último elemento si hay más de 5
-          }
-        } else {
-          console.warn('No hay datos disponibles en /Dispositivos/SPET.');
-        }
-      },
-      (error) => {
-        console.error('Error al cargar los datos del dispositivo:', error);
-      }
-    );
+    // Cargar historial almacenado localmente
+    this.historial = await this.historialService.getHistorial();
   }
 
   ngOnDestroy(): void {
-    // Desuscribirse de la referencia al dispositivo
-    if (this.dispositivoRef) {
-      off(this.dispositivoRef);
+    if (this.historialSubscription) {
+      this.historialSubscription.unsubscribe();
     }
   }
 }

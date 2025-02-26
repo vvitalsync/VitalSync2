@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { AuthService } from './Services/auth.service';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, AlertController } from '@ionic/angular';
 import { NgIf } from '@angular/common';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { LoginComponent } from './Views/auth/login/login.component';
+import { UserService } from '../app/Services/user-service.service';
 
 @Component({
   selector: 'app-root',
@@ -16,23 +17,26 @@ export class AppComponent implements OnInit {
   title = 'VitalSync';
   isSidebarOpen: boolean = false;
   isAuthenticated: boolean = false;
-  isAuthPage: boolean = false; // Detecta si está en login o register
+  isAuthPage: boolean = false;
+  user: string | null = null;
+  private alertController = inject(AlertController); // Inyectamos el controlador de alertas
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private userService: UserService
+  ) {}
 
   ngOnInit() {
-    // Suscribirse al estado de autenticación
+    this.user = this.userService.getUser();
     this.authService.authState().subscribe((user) => {
       this.isAuthenticated = !!user;
       this.checkAuthPage();
-
-      // Si no está autenticado, redirigir al login
       if (!this.isAuthenticated) {
         this.router.navigate(['/login']);
       }
     });
 
-    // Detectar cambios en la ruta
     this.router.events.subscribe(() => {
       this.checkAuthPage();
     });
@@ -43,7 +47,26 @@ export class AppComponent implements OnInit {
     this.isAuthPage = currentRoute.includes('/login') || currentRoute.includes('/register');
   }
 
-  toggleSidebar() {
-    this.isSidebarOpen = !this.isSidebarOpen;
+  async confirmLogout() {
+    const alert = await this.alertController.create({
+      header: 'Cerrar sesión',
+      message: '¿Estás seguro de que quieres cerrar sesión?',
+      buttons: [
+        {
+          text: 'Sí, cerrar sesión',
+          handler: () => this.logout(), // Llama a logout si confirman
+        },
+        {
+          text: 'No',
+          role: 'cancel',
+        },
+      ],
+    });
+    await alert.present();
+  }
+
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['/login']);
   }
 }
