@@ -5,22 +5,21 @@ import { Firestore, doc, getDoc, updateDoc } from '@angular/fire/firestore';
 import { getStorage, ref, uploadBytes, getDownloadURL } from '@angular/fire/storage';
 import { v4 as uuidv4 } from 'uuid';
 import { UserService } from '../../../Services/user-service.service';
-
+import { CommonModule } from '@angular/common';
 @Component({
   standalone: true,
-  imports: [IonicModule, FormsModule],
+  imports: [IonicModule, FormsModule, CommonModule],
   selector: 'app-conf-component',
   templateUrl: './conf-component.component.html',
   styleUrls: ['./conf-component.component.scss'],
 })
 export class ConfComponentComponent implements OnInit {
   informacion: string = '';
-  nuevaImagen: File | null = null;
   nombre: string = '';
   edad: number | null = null;
   dispositivo: string = '';
   user : string | null= '';
-  constructor(private firestore: Firestore, private userService: UserService,) {}
+  constructor(private firestore: Firestore, private userService: UserService) {}
 
   async ngOnInit() {
     this.user = this.userService.getUser();
@@ -56,35 +55,20 @@ export class ConfComponentComponent implements OnInit {
     }
   }
 
-  // Método para manejar la selección de archivos
-  onFileSelected(event: any) {
-    const file = event.target.files[0];
-    if (file) {
-      this.nuevaImagen = file;
-    }
-  }
 
   // Método para guardar los cambios en Firestore
   async guardarCambios() {
     try {
-      const infoRef = doc(this.firestore, 'usuario/'+this.user);
-
-  
-
-      // Crear objeto con los campos a actualizar
+      const infoRef = doc(this.firestore, 'usuario/' + this.user);
       const datosActualizados: any = {};
+  
       if (this.informacion) datosActualizados.informacion = this.informacion;
       if (this.nombre) datosActualizados.nombre = this.nombre;
       if (this.edad !== null) datosActualizados.edad = this.edad;
       if (this.dispositivo) datosActualizados.dis = this.dispositivo;
-
-
-      // Actualizar los datos en Firestore
+  
       await updateDoc(infoRef, datosActualizados);
-
       console.log('Datos guardados exitosamente en Firestore:', datosActualizados);
-
-      // Recargar los datos en el formulario
       await this.cargarDatos();
     } catch (error) {
       console.error('Error al guardar en Firestore:', error);

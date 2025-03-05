@@ -18,21 +18,18 @@
 
       <!-- Input para cambiar el texto -->
       <ion-item>
-        <ion-label position="stacked">Editar Informacion</ion-label>
+        <ion-label position="stacked">Editar Información</ion-label>
         <ion-textarea [(ngModel)]="informacion" name="informacion"></ion-textarea>
       </ion-item>
+
+      <!-- Input para cambiar el nombre del dispositivo -->
       <ion-item>
         <ion-label position="stacked">Nombre de su Dispositivo</ion-label>
         <ion-textarea [(ngModel)]="dispositivo" name="dispositivo"></ion-textarea>
       </ion-item>
-      <!-- Input para cambiar la imagen -->
-      <ion-item>
-        <ion-label position="stacked">Nueva Imagen</ion-label>
-        <input type="file" (change)="onFileSelected($event)" accept="image/*" />
-      </ion-item>
 
       <!-- Botón para guardar cambios -->
-      <ion-button expand="block" type="submit" >
+      <ion-button expand="block" type="submit">
         Guardar Cambios
       </ion-button>
     </form>

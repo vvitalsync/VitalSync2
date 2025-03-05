@@ -1,23 +1,41 @@
-import { Component, OnInit } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
-import { CommonModule } from '@angular/common';
-import { Firestore, doc, onSnapshot } from '@angular/fire/firestore';
-import { inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Firestore, doc, getDoc } from '@angular/fire/firestore';
 import { UserService } from '../../../Services/user-service.service';
+import { NgIf } from '@angular/common';
 @Component({
   standalone: true,
-  imports: [IonicModule, CommonModule],
+  imports: [IonicModule, NgIf],
   selector: 'app-imagen-component',
   templateUrl: './imagen-component.component.html',
   styleUrls: ['./imagen-component.component.scss'],
 })
 export class ImagenComponentComponent implements OnInit {
-  userImage: string= "/assets/user.png";
-  constructor(private userService: UserService,) {}
+  imagenUrl: string | null = null;
+  user: string | null = '';
 
-  ngOnInit(): void {
+  constructor(private firestore: Firestore, private userService: UserService) {}
 
+  async ngOnInit() {
+    this.user = this.userService.getUser();
+    if (this.user) {
+      await this.cargarImagen();
+    } else {
+      console.error('Usuario no definido.');
+    }
   }
 
+  async cargarImagen() {
+    try {
+      const infoRef = doc(this.firestore, 'usuario/' + this.user);
+      const docSnapshot = await getDoc(infoRef);
+      if (docSnapshot.exists()) {
+        this.imagenUrl = docSnapshot.data()['imagenUrl'] || null;
+      } else {
+        console.log('No se encontró la imagen en Firestore.');
+      }
+    } catch (error) {
+      console.error('Error al cargar la imagen:', error);
+    }
+  }
 }
-

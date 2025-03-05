@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { Storage } from '@capacitor/storage';
+import { Preferences } from '@capacitor/preferences';  // Importa Preferences
 import { UserService } from './Services/user-service.service';
 import { Database, ref, onValue } from '@angular/fire/database';
 import { BehaviorSubject } from 'rxjs';
@@ -29,12 +29,14 @@ export class HistorialService {
     return `historial_${cedula}`;
   }
 
+  // Reemplaza Storage.get por Preferences.get
   async getHistorial(): Promise<HistorialItem[]> {
     const key = await this.getStorageKey();
-    const { value } = await Storage.get({ key });
+    const { value } = await Preferences.get({ key });
     return value ? JSON.parse(value) : [];
   }
 
+  // Reemplaza Storage.set por Preferences.set
   async addHistorial(item: HistorialItem): Promise<void> {
     const historialActual = await this.getHistorial();
     historialActual.unshift(item);
@@ -43,15 +45,17 @@ export class HistorialService {
     await this.setHistorial(nuevoHistorial);
   }
 
+  // Reemplaza Storage.set por Preferences.set
   async setHistorial(historial: HistorialItem[]): Promise<void> {
     const key = await this.getStorageKey();
-    await Storage.set({ key, value: JSON.stringify(historial) });
+    await Preferences.set({ key, value: JSON.stringify(historial) });
     this.historialSubject.next(historial); // Notificar cambios a los suscriptores
   }
 
+  // Reemplaza Storage.remove por Preferences.remove
   async clearHistorial(): Promise<void> {
     const key = await this.getStorageKey();
-    await Storage.remove({ key });
+    await Preferences.remove({ key });
   }
 
   private async loadHistorial() {
