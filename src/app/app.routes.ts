@@ -37,5 +37,13 @@ export const routes: Routes = [
       ),
     canActivate: [AuthGuard], // Proteger la ruta con el guard
   },
+  {
+    path: 'conf',
+    loadComponent: () =>
+      import('./Components/inicio/conf-component/conf-component.component').then(
+        (m) => m.ConfComponentComponent
+      ),
+    canActivate: [AuthGuard], // Proteger la ruta con el guard
+  },
   { path: '**', redirectTo: 'login', pathMatch: 'full' }, // Redirigir rutas no encontradas al login
 ];

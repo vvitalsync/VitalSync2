@@ -1,82 +1,141 @@
-.edit-card {
-  padding: 16px;
-  border-radius: 12px;
-  background: #ffffff;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  max-width: 90%; /* Adaptable para pantallas móviles */
-  margin: 0 auto;
+/* Estilos generales */
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #ffffff; /* Fondo blanco uniforme */
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: #333333; /* Texto oscuro */
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
 
-  ion-card-header {
-    padding-bottom: 10px;
-    text-align: center;
+/* Contenedor principal de la app */
+.app {
+  width: 100%;
+  max-width: 480px; /* Ancho típico de una app móvil */
+  box-sizing: border-box;
+  padding-top: 80px; /* Espacio para la barra fija */
+}
 
-    ion-card-title {
-      font-size: 1.2rem;
-      font-weight: 600;
-      color: #2c3e50;
+
+/* Contenedor del contenido */
+.app-container {
+  padding: 20px;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: #ffffff; /* Fondo blanco uniforme */
+}
+
+/* Estilos para la tarjeta */
+.card {
+  background: #ffffff; /* Fondo blanco */
+  color: #333333;
+  border-radius: 0; /* Sin bordes redondeados para coincidir con la captura */
+  box-shadow: none; /* Sin sombra para un look más plano */
+  margin-bottom: 20px;
+  border: none; /* Sin borde */
+
+  .card-header {
+    background: #ffffff; /* Fondo blanco */
+    padding: 20px;
+    border-bottom: none; /* Sin borde inferior */
+
+    .card-title {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #007bff; /* Azul primario */
+      margin: 0;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      gap: 8px; /* Espacio entre el ícono y el texto */
     }
   }
 
-  ion-card-content {
-    padding: 0;
+  .card-content {
+    padding: 20px;
 
-    form {
-      display: flex;
-      flex-direction: column;
-      gap: 12px; /* Espacio entre inputs */
+    .form-group {
+      margin-bottom: 20px;
 
-      ion-item {
-        --inner-padding-top: 8px;
-        --inner-padding-bottom: 8px;
-        --border-radius: 8px;
-        --background: #f8f8f8;
-        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+      label {
+        display: block;
+        font-size: 0.9rem;
+        color: #333333; /* Texto oscuro */
+        font-weight: 700;
         margin-bottom: 8px;
-
-        ion-label {
-          font-size: 0.9rem;
-          font-weight: 500;
-          color: #34495e;
-        }
-
-        ion-input,
-        ion-textarea {
-          font-size: 0.9rem;
-          color: #555;
-        }
+        text-transform: uppercase; /* Mayúsculas para coincidir con la captura */
       }
 
-      /* Estilo del input de archivo */
-      input[type="file"] {
-        padding: 8px;
-        border: 1px solid #ddd;
+      input,
+      textarea {
+        width: 100%;
+        padding: 12px;
+        background: #ffffff;
+        color: #333333;
+        border: 1px solid #007bff; /* Borde azul */
         border-radius: 8px;
-        background: #f8f8f8;
-        font-size: 0.9rem;
-        color: #555;
-        outline: none;
-        transition: border-color 0.2s;
+        font-size: 1rem;
+        box-sizing: border-box;
+        transition: border-color 0.3s ease;
 
         &:focus {
-          border-color: #1abc9c;
+          outline: none;
+          border-color: #0056b3; /* Azul más oscuro al enfocar */
+        }
+
+        &::placeholder {
+          color: #7f8c8d; /* Gris claro para placeholder */
+          opacity: 1;
         }
       }
 
-      /* Estilo del botón */
-      ion-button {
-        --border-radius: 8px;
-        --background: #1660F5;
-        --color: white;
-        font-size: 1rem;
-        font-weight: 600;
-        text-transform: capitalize;
-        transition: transform 0.2s ease, background-color 0.2s ease;
-
-        &:hover {
-          transform: translateY(-2px);
-          background-color: #1660F5;
-        }
+      textarea {
+        min-height: 100px;
+        resize: vertical;
       }
     }
+
+    .submit-btn {
+      width: 100%;
+      padding: 14px;
+      background: #007bff; /* Azul primario */
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin-top: auto; /* Empuja el botón hacia abajo */
+      align-self: center; /* Centra horizontalmente */
+
+      &:hover {
+        background: #0056b3; /* Azul más oscuro al hover */
+      }
+
+      &:active {
+        background: #003d80; /* Azul aún más oscuro al clic */
+      }
+    }
+  }
+}
+
+
+/* Media query para ajustes responsivos */
+@media (max-width: 480px) {
+  .app-container {
+    padding: 10px;
+  }
+
+  .card-content {
+    padding: 15px;
+  }
+
+  .card-header .card-title {
+    font-size: 1.4rem;
   }
 }

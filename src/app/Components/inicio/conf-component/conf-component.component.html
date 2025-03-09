@@ -1,37 +1,39 @@
-<ion-card>
-  <ion-card-header>
-    <ion-card-title>🛠 Editar Información</ion-card-title>
-  </ion-card-header>
-  <ion-card-content>
-    <form (ngSubmit)="guardarCambios()">
-      <!-- Input para cambiar el nombre -->
-      <ion-item>
-        <ion-label position="stacked">Nombre</ion-label>
-        <ion-input [(ngModel)]="nombre" name="nombre"></ion-input>
-      </ion-item>
+<div class="app">
+  <div class="app-container">
+    <div class="card">
+      <div class="card-header">
+        <h2 class="card-title">✨ Editar Información</h2>
+      </div>
+      <div class="card-content">
+        <form id="edit-form" (ngSubmit)="guardarCambios()">
+          <!-- Input para cambiar el nombre -->
+          <div class="form-group">
+            <label for="nombre">Nombre</label>
+            <input type="text" id="nombre" name="nombre" [(ngModel)]="nombre" />
+          </div>
 
-      <!-- Input para cambiar la edad -->
-      <ion-item>
-        <ion-label position="stacked">Edad</ion-label>
-        <ion-input type="number" [(ngModel)]="edad" name="edad"></ion-input>
-      </ion-item>
+          <!-- Input para cambiar la edad -->
+          <div class="form-group">
+            <label for="edad">Edad</label>
+            <input type="number" id="edad" name="edad" [(ngModel)]="edad" />
+          </div>
 
-      <!-- Input para cambiar el texto -->
-      <ion-item>
-        <ion-label position="stacked">Editar Información</ion-label>
-        <ion-textarea [(ngModel)]="informacion" name="informacion"></ion-textarea>
-      </ion-item>
+          <!-- Input para cambiar el texto -->
+          <div class="form-group">
+            <label for="informacion">Editar Información</label>
+            <textarea id="informacion" name="informacion" [(ngModel)]="informacion"></textarea>
+          </div>
 
-      <!-- Input para cambiar el nombre del dispositivo -->
-      <ion-item>
-        <ion-label position="stacked">Nombre de su Dispositivo</ion-label>
-        <ion-textarea [(ngModel)]="dispositivo" name="dispositivo"></ion-textarea>
-      </ion-item>
+          <!-- Input para cambiar el nombre del dispositivo -->
+          <div class="form-group">
+            <label for="dispositivo">Nombre de tu Dispositivo</label>
+            <textarea id="dispositivo" name="dispositivo" [(ngModel)]="dispositivo"></textarea>
+          </div>
 
-      <!-- Botón para guardar cambios -->
-      <ion-button expand="block" type="submit">
-        Guardar Cambios
-      </ion-button>
-    </form>
-  </ion-card-content>
-</ion-card>
+          <!-- Botón para guardar cambios -->
+          <button type="submit" class="submit-btn">Guardar Cambios</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

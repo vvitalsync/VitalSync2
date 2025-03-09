@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { ConfComponentComponent } from '../conf-component/conf-component.component';
 import { NgIf } from '@angular/common';
-
+import { Router } from '@angular/router';
 @Component({
   standalone: true,
   imports: [IonicModule, ConfComponentComponent, NgIf],
@@ -12,12 +12,12 @@ import { NgIf } from '@angular/common';
 })
 export class ConfiguracionComponentComponent  implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router,) { }
 
-  ngOnInit() {}
-  isEditing: boolean = false;
-
-  toggleEdit() {
-    this.isEditing = !this.isEditing; // Alternar entre mostrar y ocultar el espacio de edición
+  ngOnInit() {
+    
+  }
+  goToEdit() {
+    this.router.navigate(['/conf']);
   }
 }

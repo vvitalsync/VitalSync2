@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "346969213795",
+    "firebase_url": "https://esp32-c0581-default-rtdb.firebaseio.com",
+    "project_id": "esp32-c0581",
+    "storage_bucket": "esp32-c0581.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:346969213795:android:0ca08128a082a730842156",
+        "android_client_info": {
+          "package_name": "com.vitalsync.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDeHYRRD_UmSuD8nL5sQWfW8ISG8gQEL_4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -8,9 +8,9 @@ import { ConfiguracionComponentComponent } from '../../Components/inicio/configu
 import { NgIf } from '@angular/common';
 
 @Component({
-  standalone: true,
   selector: 'app-inicio-component',
   imports: [IonicModule, ImagenComponentComponent, DatosComponentComponent, ConfiguracionComponentComponent, NgIf],
+  standalone: true,
   templateUrl: './inicio-component.component.html',
   styleUrls: ['./inicio-component.component.scss'],
 })

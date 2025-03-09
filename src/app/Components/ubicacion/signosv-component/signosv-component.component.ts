@@ -5,6 +5,7 @@ import { IonicModule } from '@ionic/angular';
 import { DatosComponentComponent } from '../../inicio/datos-component/datos-component.component';
 import { UserService } from '../../../Services/user-service.service';
 import { Router } from '@angular/router';
+import { NotificationService } from '../../../Services/notification.service'; // Asegúrate de importar el servicio
 
 @Component({
   standalone: true,
@@ -15,7 +16,7 @@ import { Router } from '@angular/router';
 })
 export class SignosvComponentComponent implements OnInit {
   pulso: number | undefined = undefined;
-  saturacion: number | undefined = undefined; // Agregamos la saturación
+  saturacion: number | undefined = undefined;
   dis: string | null = ''; 
   user: string | null = null;
 
@@ -23,14 +24,15 @@ export class SignosvComponentComponent implements OnInit {
     private router: Router,
     private database: Database,
     private userService: UserService,
-    private firestore: Firestore
+    private firestore: Firestore,
+    private notificationService: NotificationService // Inyectar el servicio
   ) {}
 
   ngOnInit(): void {
-    this.user = this.userService.getUser();
+    this.user = this.userService.getUser ();
     console.log('Usuario:', this.user);
     
-    this.solicitarPermisoNotificaciones();
+    this.notificationService.solicitarPermiso(); // Solicitar permiso para notificaciones
 
     if (this.user) {
       this.obtenerCampoDis().then(() => {
@@ -60,7 +62,7 @@ export class SignosvComponentComponent implements OnInit {
 
   obtenerDatosFirebase(): void {
     const pulsoRef = ref(this.database, `/Dispositivos/${this.dis}/sensor/pulso`);
-    const satRef = ref(this.database, `/Dispositivos/${this.dis}/sensor/sat_oxi`); // Referencia a la saturación
+    const satRef = ref(this.database, `/Dispositivos/${this.dis}/sensor/sat_oxi`);
 
     onValue(pulsoRef, (snapshot) => {
       this.pulso = snapshot.val();
@@ -78,39 +80,14 @@ export class SignosvComponentComponent implements OnInit {
   verificarPulsoIrregular(): void {
     if (this.pulso !== undefined && (this.pulso > 100 || this.pulso < 60)) {
       console.warn('Pulso irregular, por favor atender');
-      this.enviarNotificacion('Pulso irregular', 'Por favor atender al paciente.');
+      this.notificationService.enviarNotificacion('Pulso irregular', 'Por favor atender al paciente.'); // Cambiar a usar el servicio
     }
   }
 
   verificarSaturacionBaja(): void {
-    if (this.saturacion !== undefined && this.saturacion < 95) {
+    if (this.saturacion !== undefined && this.saturacion < 92) { // Cambiar el umbral a 92
       console.warn('Saturación baja, posible hipoxia.');
-      this.enviarNotificacion('Saturación baja', 'Por favor atender al paciente. Posible hipoxia.');
-    }
-  }
-
-  solicitarPermisoNotificaciones(): void {
-    if ('Notification' in window) {
-      Notification.requestPermission().then((permission) => {
-        if (permission === 'granted') {
-          console.log('Permiso para notificaciones otorgado.');
-        } else {
-          console.warn('Permiso para notificaciones denegado.');
-        }
-      });
-    } else {
-      console.error('El navegador no soporta notificaciones.');
-    }
-  }
-
-  enviarNotificacion(titulo: string, mensaje: string): void {
-    if ('Notification' in window && Notification.permission === 'granted') {
-      new Notification(titulo, {
-        body: mensaje,
-        icon: 'assets/notification-icon.png',
-      });
-    } else {
-      console.warn('No se pudo enviar la notificación. Permiso no otorgado.');
+      this.notificationService.enviarNotificacion('Saturación baja', 'Por favor atender al paciente. Posible hipoxia.'); // Cambiar a usar el servicio
     }
   }
 }

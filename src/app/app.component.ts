@@ -5,7 +5,7 @@ import { NgIf } from '@angular/common';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { LoginComponent } from './Views/auth/login/login.component';
 import { UserService } from '../app/Services/user-service.service';
-
+import { NotificationService } from './Services/notification.service';
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -24,10 +24,12 @@ export class AppComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private userService: UserService
+    private userService: UserService,
+    private notificationService: NotificationService
   ) {}
 
   ngOnInit() {
+
     this.user = this.userService.getUser();
     this.authService.authState().subscribe((user) => {
       this.isAuthenticated = !!user;

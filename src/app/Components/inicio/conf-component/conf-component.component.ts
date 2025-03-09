@@ -6,6 +6,8 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from '@angular/fire/stor
 import { v4 as uuidv4 } from 'uuid';
 import { UserService } from '../../../Services/user-service.service';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
+
 @Component({
   standalone: true,
   imports: [IonicModule, FormsModule, CommonModule],
@@ -19,7 +21,7 @@ export class ConfComponentComponent implements OnInit {
   edad: number | null = null;
   dispositivo: string = '';
   user : string | null= '';
-  constructor(private firestore: Firestore, private userService: UserService) {}
+  constructor(private firestore: Firestore, private userService: UserService,private router: Router) {}
 
   async ngOnInit() {
     this.user = this.userService.getUser();
@@ -32,6 +34,7 @@ export class ConfComponentComponent implements OnInit {
       });
     } else {
       console.error('Usuario no definido.');
+      this.router.navigate(['/login']);
     }
   }
 
@@ -70,8 +73,10 @@ export class ConfComponentComponent implements OnInit {
       await updateDoc(infoRef, datosActualizados);
       console.log('Datos guardados exitosamente en Firestore:', datosActualizados);
       await this.cargarDatos();
+        this.router.navigate(['/inicio']);
     } catch (error) {
       console.error('Error al guardar en Firestore:', error);
     }
   }
+  
 }
